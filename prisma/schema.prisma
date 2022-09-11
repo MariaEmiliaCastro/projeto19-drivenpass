@@ -12,6 +12,7 @@ model Users {
   email       String        @unique
   password    String
   credentials Credentials[]
+  cards       Cards[]
 }
 
 model Credentials {
@@ -21,6 +22,22 @@ model Credentials {
   url      String
   username String
   password String
+  user     Users  @relation(fields: [userId], references: [id])
+
+  @@unique([userId, label])
+}
+
+model Cards {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  label    String
+  number   String
+  name     String
+  cvc      String
+  expirationDate String
+  password  String
+  type     String
+  isVirtual Boolean
   user     Users  @relation(fields: [userId], references: [id])
 
   @@unique([userId, label])
