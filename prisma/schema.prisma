@@ -13,6 +13,8 @@ model Users {
   password    String
   credentials Credentials[]
   cards       Cards[]
+  notes       SecureNotes[]
+  wifi        WiFi[]
 }
 
 model Credentials {
@@ -41,4 +43,24 @@ model Cards {
   user     Users  @relation(fields: [userId], references: [id])
 
   @@unique([userId, label])
+}
+
+model SecureNotes {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  title    String
+  note     String
+  user     Users  @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model WiFi {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  label    String
+  network     String
+  password  String
+  user     Users  @relation(fields: [userId], references: [id])
+
 }
